@@ -17,3 +17,16 @@ int my_strlen(const char* s) {
     while (*s) { len++; s++; }
     return len;
 }
+
+void printPad(const char* str, int width) {
+    int len = my_strlen(str);
+    cout << str;
+    for (int i = len; i < width; i++) cout << " ";
+}
+
+void printPadNum(int num, int width) {
+    cout << num;
+    int len = 1, temp = num;
+    while(temp > 9) { len++; temp /= 10; }
+    for(int i = len; i < width; i++) cout << " ";
+}
