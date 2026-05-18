@@ -30,3 +30,19 @@ void printPadNum(int num, int width) {
     while(temp > 9) { len++; temp /= 10; }
     for(int i = len; i < width; i++) cout << " ";
 }
+
+struct Pengeluaran {
+    char tanggal[20];
+    char kategori[30];
+    char deskripsi[50];
+    double nominal;
+};
+
+struct Node {
+    Pengeluaran data;
+    Node* kiri;  
+    Node* kanan; 
+};
+
+Node* kepala; 
+Node* ekor;   
