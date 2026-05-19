@@ -46,3 +46,29 @@ struct Node {
 
 Node* kepala; 
 Node* ekor;   
+
+void buatList() {
+    kepala = new Node;
+    ekor = new Node;
+    
+    kepala->data.nominal = -99999;
+    kepala->kanan = ekor;
+    kepala->kiri = ekor; // Melingkar ke ekor
+    
+    ekor->data.nominal = 99999;
+    ekor->kiri = kepala;
+    ekor->kanan = kepala; // Melingkar ke kepala
+}
+
+bool kosong() {
+    return kepala->kanan == ekor;
+}
+
+void pause() {
+    cout << "\nTekan enter...";
+    cin.get();
+}
+
+void clearScreen() {
+    for(int i = 0; i < 30; i++) cout << "\n";
+}
