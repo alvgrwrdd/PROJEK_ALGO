@@ -53,11 +53,11 @@ void buatList() {
     
     kepala->data.nominal = -99999;
     kepala->kanan = ekor;
-    kepala->kiri = ekor; // Melingkar ke ekor
+    kepala->kiri = ekor; 
     
     ekor->data.nominal = 99999;
     ekor->kiri = kepala;
-    ekor->kanan = kepala; // Melingkar ke kepala
+    ekor->kanan = kepala; 
 }
 
 bool kosong() {
@@ -71,4 +71,57 @@ void pause() {
 
 void clearScreen() {
     for(int i = 0; i < 30; i++) cout << "\n";
+}
+
+
+void tambahPengeluaran() {
+    Node* baru = new Node;
+    
+    cout << "Tanggal (dd-mm-yyyy): ";
+    cin.getline(baru->data.tanggal, 20);
+    
+    cout << "Kategori: ";
+    cin.getline(baru->data.kategori, 30);
+    
+    cout << "Deskripsi: ";
+    cin.getline(baru->data.deskripsi, 50);
+    
+    cout << "Nominal: ";
+    cin >> baru->data.nominal;
+    cin.ignore();
+    
+    
+    baru->kanan = ekor;
+    baru->kiri = ekor->kiri;
+    ekor->kiri->kanan = baru;
+    ekor->kiri = baru;
+    
+    cout << "\nData berhasil ditambahkan!\n";
+}
+
+void tampilkan() {
+    if(kosong()){
+        cout << "Data kosong.\n";
+        return;
+    }
+
+    Node* bantu = kepala->kanan;
+    int no = 1;
+
+    cout << "\n===== HISTORI PENGELUARAN =====\n";
+    printPad("No", 5);
+    printPad("Tanggal", 15);
+    printPad("Kategori", 20);
+    printPad("Deskripsi", 25);
+    cout << "Nominal\n";
+
+    while(bantu != ekor) {
+        printPadNum(no++, 5);
+        printPad(bantu->data.tanggal, 15);
+        printPad(bantu->data.kategori, 20);
+        printPad(bantu->data.deskripsi, 25);
+        cout << bantu->data.nominal << "\n";
+        
+        bantu = bantu->kanan;
+    }
 }
