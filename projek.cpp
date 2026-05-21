@@ -227,3 +227,54 @@ void clearList() {
     kepala->kanan = ekor;
     ekor->kiri = kepala;
 }
+
+void simpanFile() {
+    FILE* fp = fopen("pengeluaran.dat", "wb");
+    if(!fp) { cout << "Gagal membuat file.\n"; return; }
+
+    Node* p = kepala->kanan;
+    while(p != ekor) {
+      fwrite(&(p->data), sizeof(Pengeluaran), 1, fp);
+      p = p->kanan;
+    }
+
+    fclose(fp);
+    cout << "Data tersimpan ke file (pengeluaran.dat).\n";
+}
+
+void bacaFile() {
+    FILE* fp = fopen("pengeluaran.dat", "rb");
+    if(!fp){ cout << "File belum ada.\n"; return; }
+
+    clearList();
+
+    Pengeluaran temp;
+    while(fread(&temp, sizeof(Pengeluaran), 1, fp) == 1) {
+        Node* baru = new Node;
+        baru->data = temp;
+        
+        // Membangun ulang list
+        baru->kanan = ekor;
+        baru->kiri = ekor->kiri;
+        ekor->kiri->kanan = baru;
+        ekor->kiri = baru;
+    }
+
+    fclose(fp);
+    cout << "Data berhasil dimuat dari file.\n";
+}
+
+void pengeluaranTerbesar() {
+    if(kosong()){ cout << "Data kosong\n"; return; }
+
+    Node* p = kepala->kanan;
+    Pengeluaran max_val = p->data;
+
+    while(p != ekor) {
+        if(p->data.nominal > max_val.nominal) max_val = p->data;
+        p = p->kanan;
+    }
+
+    cout << "Pengeluaran terbesar:\n";
+    cout << max_val.deskripsi << " | " << max_val.kategori << " | Rp" << max_val.nominal << "\n";
+}
