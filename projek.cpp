@@ -278,3 +278,42 @@ void pengeluaranTerbesar() {
     cout << "Pengeluaran terbesar:\n";
     cout << max_val.deskripsi << " | " << max_val.kategori << " | Rp" << max_val.nominal << "\n";
 }
+
+int main() {
+    buatList(); 
+    int pilih;
+
+    do {
+        clearScreen();
+        cout << "=== SISTEM KELOLA HISTORI PENGELUARAN ===\n";
+        cout << "1. Tambah Pengeluaran\n";
+        cout << "2. Tampilkan Histori\n";
+        cout << "3. Cari Berdasarkan Kategori\n";
+        cout << "4. Urutkan Berdasarkan Nominal\n";
+        cout << "5. Hapus Data\n";
+        cout << "6. Total Pengeluaran\n";
+        cout << "7. Pengeluaran Terbesar\n";
+        cout << "8. Simpan ke File\n";
+        cout << "9. Baca dari File\n";
+        cout << "0. Exit\n";
+        cout << "Pilih: ";
+        cin >> pilih;
+        cin.ignore();
+
+        switch(pilih) {
+            case 1: tambahPengeluaran(); pause(); break;
+            case 2: tampilkan(); pause(); break;
+            case 3: cariKategori(); pause(); break;
+            case 4: sortNominal(); pause(); break;
+            case 5: hapusData(); pause(); break;
+            case 6: totalBulanan(); pause(); break;
+            case 7: pengeluaranTerbesar(); pause(); break;
+            case 8: simpanFile(); pause(); break;
+            case 9: bacaFile(); pause(); break;
+            case 0: cout << "Program selesai.\n"; break;
+            default: cout << "Pilihan salah.\n"; pause();
+        }
+    } while(pilih != 0);
+
+    return 0;
+}
