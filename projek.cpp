@@ -125,3 +125,105 @@ void tampilkan() {
         bantu = bantu->kanan;
     }
 }
+
+void cariKategori() {
+    if(kosong()){ cout << "Data kosong.\n"; return; }
+
+    char cari[30];
+    cout << "Masukkan kategori dicari: ";
+    cin.getline(cari, 30);
+
+    Node* bantu = kepala->kanan;
+    bool ketemu = false;
+
+    while(bantu != ekor) {
+        if(my_strcmp(bantu->data.kategori, cari)) {
+            cout << bantu->data.tanggal << " | "
+                 << bantu->data.deskripsi << " | Rp"
+                 << bantu->data.nominal << "\n";
+            ketemu = true;
+        }
+        bantu = bantu->kanan;
+    }
+
+    if(!ketemu) cout << "Tidak ditemukan.\n";
+}
+
+void hapusData() {
+    if(kosong()){ cout << "Data kosong.\n"; return; }
+    tampilkan();
+
+    int hapus;
+    cout << "Hapus data nomor: ";
+    cin >> hapus;
+    cin.ignore();
+
+    Node* bantu = kepala->kanan;
+    int pos = 1;
+
+    while(bantu != ekor && pos < hapus) {
+        bantu = bantu->kanan;
+        pos++;
+    }
+
+    if(bantu == ekor) {
+        cout << "Nomor tidak valid\n";
+        return;
+    }
+
+    
+    bantu->kiri->kanan = bantu->kanan;
+    bantu->kanan->kiri = bantu->kiri;
+    delete bantu;
+
+    cout << "Data dihapus.\n";
+}
+
+void totalBulanan() {
+    double total = 0;
+    Node* bantu = kepala->kanan;
+    while(bantu != ekor) {
+        total += bantu->data.nominal;
+        bantu = bantu->kanan;
+    }
+    cout << "Total Pengeluaran: Rp" << total << "\n";
+}
+
+void sortNominal() {
+    if(kosong() || kepala->kanan->kanan == ekor){
+        cout << "Data kurang untuk sorting.\n";
+        return;
+    }
+
+    bool tukar;
+    Node* p;
+    Pengeluaran temp;
+
+    do {
+      tukar = false;
+      p = kepala->kanan;
+
+      while(p->kanan != ekor) {
+          if(p->data.nominal > p->kanan->data.nominal) {
+              temp = p->data;
+              p->data = p->kanan->data;
+              p->kanan->data = temp;
+              tukar = true;
+          }
+          p = p->kanan;
+      }
+    } while(tukar);
+
+    cout << "Data berhasil diurutkan ascending nominal.\n";
+}
+
+void clearList() {
+    Node* bantu = kepala->kanan;
+    while(bantu != ekor) {
+        Node* hapus = bantu;
+        bantu = bantu->kanan;
+        delete hapus;
+    }
+    kepala->kanan = ekor;
+    ekor->kiri = kepala;
+}
